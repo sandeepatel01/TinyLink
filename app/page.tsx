@@ -1,4 +1,4 @@
-const LandingPage = () => {
+const Dashboard = () => {
   return (
     <div className="flex justify-center items-center h-screen text-4xl font-bold">
       TinyLink - URL Shortener
@@ -6,4 +6,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Dashboard;
