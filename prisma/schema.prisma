@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id          String    @id @default(uuid())
+  code        String    @unique @db.VarChar(8)
+  url         String    @db.Text
+  clicks      Int       @default(0)
+  lastClicked DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@map("links")
+}
