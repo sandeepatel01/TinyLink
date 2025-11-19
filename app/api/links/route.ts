@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { CreateLinkSchema } from "@/lib/validation";
-import { generateRandomCode } from "@/lib/utils";
+import { generateRandomCode } from "@/lib/helper";
 
 export async function POST(request: NextRequest) {
   try {
