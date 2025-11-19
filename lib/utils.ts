@@ -1,11 +1,6 @@
-export function generateRandomCode(length: number = 6): string {
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-
-  return result;
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }
