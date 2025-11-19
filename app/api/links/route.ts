@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: validatedData.error.errors[0]?.message || "Invalid input",
+          error: validatedData.error.issues[0]?.message || "Invalid input",
         },
         { status: 400 }
       );
@@ -83,32 +83,21 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Create link API error:", error);
 
-    // Handle Prisma unique constraint error
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "This code is already taken. Please try a different one.",
-        },
-        { status: 409 }
-      );
+    if (typeof error === "object" && error !== null && "code" in error) {
+      if (error.code === "P2002") {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "This code is already taken. Please try a different one.",
+          },
+          { status: 409 }
+        );
+      }
     }
 
-    // Handle database connection errors
-    if (error.name === "PrismaClientInitializationError") {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Database connection failed. Please try again later.",
-        },
-        { status: 503 }
-      );
-    }
-
-    // Generic server error
     return NextResponse.json(
       {
         success: false,
@@ -150,7 +139,7 @@ export async function GET(request: NextRequest) {
       data: linksWithShortUrl,
       count: links.length,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Get links API error:", error);
 
     return NextResponse.json(
