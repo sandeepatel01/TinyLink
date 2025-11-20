@@ -10,7 +10,7 @@ export async function GET(
 
     // Special case: healthz route
     if (code === "healthz") {
-      return NextResponse.redirect(new URL("/healthz", request.url));
+      return NextResponse.redirect(new URL("/api/healthz", request.url));
     }
 
     // Find link in database
